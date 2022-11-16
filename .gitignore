@@ -352,5 +352,5 @@ MigrationBackup/
 .DS_Store
 .vscode
 *.xslx
-*.dist
+*/dist
 *.node_modules/
