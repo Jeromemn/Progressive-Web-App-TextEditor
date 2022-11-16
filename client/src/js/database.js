@@ -1,5 +1,6 @@
 import { openDB } from 'idb';
 
+const dbName = 'jate'
 const initdb = async () =>
   openDB('jate', 1, {
     upgrade(db) {
@@ -13,46 +14,27 @@ const initdb = async () =>
   });
 
 // TODO: Add logic to a method that accepts some data and adds it to the database
-// export const postDb = async ( content ) => {
-//   const jateDb = await openDB('jate', 1);
-//   const txt = jateDb.transaction('jate', 'readwrite');
-//   const store = txt.objectStore('jate');
-//   const request = store.add({ jate: content });
-//   const results = await request;
-//   console.log(' - text saved to database', results)
-// }
 
 export const putDb = async (data) => {
-  // console.error('putDb not implemented');
-  try {
-  console.log(data);
-  const jateDb = await openDB('jate', 1);
-  const txt = jateDb.transaction('jate', 'readwrite');
-  const store = txt.objectStore('jate');
-  const results = await store.put(data, 'jate');
-  // const results = await store.put({ id: 1, value: data });
-  console.log( 'data updated to the server', results)
-  } catch (err) {
-    console.log(err);
-    throw (err);
-  }
-  // const results = await request;
+  const jateDb = await openDB(dbName, 1);
+  const txt = jateDb.transaction(dbName, 'readwrite');
+  const store = txt.objectStore(dbName);
+  const results = await store.put({
+    id: 1,
+   value: data
+  });
+
+  console.log('updated data in IDB', results);
 };
+
 // TODO: Add logic for a method that gets all the data from the database
+
 export const getDb = async () => {
-  // console.error('getDb not implemented');
-  try {
-  const jateDb = await openDB('jate', 1);
-  const txt = jateDb.transaction('jate', 'readonly');
-  const store = txt.objectStore('jate');
-  const request = store.getAll();
-  const result = await request;
-  console.log('result.value', result);
-  return result;
-  }catch (err) {
-    console.log(err);
-    throw err;
-  }
+  const jateDb = await openDB(dbName, 1 );
+  const tx = jateDb.transaction(dbName, 'readonly');
+  const store = tx.objectStore(dbName);
+  const results = await store.get(1);
+  return results?.value;
 };
 
 initdb();
