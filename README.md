@@ -1,5 +1,5 @@
 
-# JATE- a proressive Web Application: text editor 
+# JATE- a progressive Web Application: text editor 
 
 ## License
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
